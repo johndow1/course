@@ -20,5 +20,16 @@ pipeline {
                 }
             }
         }
+         stage('SonarQube analysis') { 
+             steps {
+        withSonarQubeEnv('Sonar') { 
+          sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.3.0.603:sonar ' + 
+          '-Dsonar.login=$SONAR_UN ' +
+          '-Dsonar.password=$SONAR_PW ' +
+          '-Dsonar.test.inclusions=**/*Test*/** ' +
+          '-Dsonar.exclusions=**/*Test*/**'
+        }
+             }
+    }
     }
 }
